@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asm 1</title>
+  </head>
+  <body>
+    <p id="abc"></p>
+    <div id="message"></div>
+    <button onclick="alert(message)">Xem thông tin</button>
+    <script>
+      alert("Welcome to your first Javascript");
+      var hoTen = prompt("Enter your name: ");
+      var theP = document.getElementById("abc");
+      var city = prompt("Enter your city:");
+      var phone = prompt("Enter your phone number:");
+      var yearOfBirth = prompt("Enter your year of birth:");
+      var currentYear = new Date().getFullYear();
+      while (yearOfBirth > currentYear) {
+        yearOfBirth = prompt("Enter your year of birth again:");
+      }
+      var message =
+        "Your information: Name: " +
+        hoTen +
+        ", City: " +
+        city +
+        ", Phone number: " +
+        phone +
+        ", Year of birth: " +
+        yearOfBirth;
+      document.getElementById("message").innerHTML = message;
+    </script>
+  </body>
+</html>
