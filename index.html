@@ -2,34 +2,64 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asm 1</title>
+    <title>ASM2JS</title>
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
+
   <body>
-    <p id="abc"></p>
-    <div id="message"></div>
-    <button onclick="alert(message)">Xem thông tin</button>
-    <script>
-      alert("Welcome to your first Javascript");
-      var hoTen = prompt("Enter your name: ");
-      var theP = document.getElementById("abc");
-      var city = prompt("Enter your city:");
-      var phone = prompt("Enter your phone number:");
-      var yearOfBirth = prompt("Enter your year of birth:");
-      var currentYear = new Date().getFullYear();
-      while (yearOfBirth > currentYear) {
-        yearOfBirth = prompt("Enter your year of birth again:");
-      }
-      var message =
-        "Your information: Name: " +
-        hoTen +
-        ", City: " +
-        city +
-        ", Phone number: " +
-        phone +
-        ", Year of birth: " +
-        yearOfBirth;
-      document.getElementById("message").innerHTML = message;
-    </script>
+    <form class="container">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your Fullname:) "
+        /><br /><br />
+        <label for="dob">DOB:</label>
+        <input type="date" id="year" /><br /><br />
+        <label for="toan">Maths Scores:</label>
+        <input
+          type="number"
+          id="toan"
+          placeholder="Enter Math's scores:) "
+        /><br /><br />
+        <label for="ly">Physical Scores:</label>
+        <input
+          type="number"
+          id="ly"
+          placeholder="Enter Physics scores :) "
+        /><br /><br />
+        <label for="hoa">Chemical Scores:</label>
+        <input
+          type="number"
+          id="hoa"
+          placeholder="Enter Chemistry scores :) "
+        /><br /><br />
+        <input type="button" value="Add" onclick="Add()" />
+        <input
+          step="display : none;"
+          type="button"
+          value="Count Average"
+          onclick="Average()"
+        />
+        <input type="button" value="Define Hoc Luc" onclick="hocLuc()" />
+    </form>
+
+    <table border="1px" cellspacing="0" cellpadding="3%" style="width: 100%">
+      <thead>
+        <tr>
+          <td>Fullname</td>
+          <td>Age</td>
+          <td>Math</td>
+          <td>Physics</td>
+          <td>Chemistry</td>
+          <td>Average</td>
+          <td>Hoc luc</td>
+        </tr>
+      </thead>
+      <tbody id="mytable"></tbody>
+    </table>
   </body>
 </html>
