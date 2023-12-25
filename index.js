@@ -31,22 +31,22 @@ function Student(name, year, math, physics, chemistry) {
     let hoa = parseFloat($("#hoa").val());
   
     if (name.trim() === "") {
-      alert("Vui lòng nhập tên.");
+      alert("Invalid");
       return false;
     }
   
     if (isNaN(toan) || toan < 1 || toan > 10) {
-      alert("Điểm Toán phải là một số từ 1 đến 10.");
+      alert("Invalid");
       return false;
     }
   
     if (isNaN(ly) || ly < 1 || ly > 10) {
-      alert("Điểm Lý phải là một số từ 1 đến 10.");
+      alert("Invalid");
       return false;
     }
   
     if (isNaN(hoa) || hoa < 1 || hoa > 10) {
-      alert("Điểm Hóa phải là một số từ 1 đến 10.");
+      alert("Invalid");
       return false;
     }
   
