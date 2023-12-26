@@ -8,64 +8,31 @@ function Student(name, year, math, physics, chemistry) {
     this.type = "None";
   }
   
-  let students = [];
+let students = [];
   
-  $(document).ready(function () {
-    $("form").submit(function (event) {
-      event.preventDefault(); 
-  
-      if (validateForm()) {
-        Add();
-        clearForm();
-      }
-    });
-  
-    $("#averageButton").click(countAverage);
-    $("#hocLucButton").click(hocLuc);
-  });
-  
-  function validateForm() {
-    let name = $("#name").val();
-    let toan = parseFloat($("#toan").val());
-    let ly = parseFloat($("#ly").val());
-    let hoa = parseFloat($("#hoa").val());
-  
-    if (name.trim() === "") {
-      alert("Invalid");
-      return false;
-    }
-  
-    if (isNaN(toan) || toan < 1 || toan > 10) {
-      alert("Invalid");
-      return false;
-    }
-  
-    if (isNaN(ly) || ly < 1 || ly > 10) {
-      alert("Invalid");
-      return false;
-    }
-  
-    if (isNaN(hoa) || hoa < 1 || hoa > 10) {
-      alert("Invalid");
-      return false;
-    }
-  
-    return true;
-  }
-  
-  function Add() {
+function Add() {
     let name = $("#name").val();
     let year = $("#year").val();
     let math = $("#toan").val();
     let physics = $("#ly").val();
     let chemistry = $("#hoa").val();
-  
-    let newStudent = new Student(name, year, math, physics, chemistry);
-    students.push(newStudent);
-    in_DSSV();
-    
-    return false;
-  }
+    if (name.trim().length === 0) {
+        alert("Please enter your name");
+    } 
+    else if (isNaN(math) || math > 10 || math <0 ) {
+        alert("Invalid score");
+    }
+    else if (isNaN(physics) || physics < 0 || physics > 10) {
+        alert("Invalid score");
+    }
+    else if (chemistry < 0 || chemistry > 10 || isNaN(chemistry)) {
+        alert("Invalid score");
+    } else {
+        let newStudent = new Student(name, year, math, physics, chemistry);
+        students.push(newStudent);
+        in_DSSV();
+    }
+}
   
   function in_DSSV() {
     let table = $("#mytable");
@@ -113,12 +80,4 @@ function Student(name, year, math, physics, chemistry) {
       }
     });
     in_DSSV();
-  }
-  
-  function clearForm() {
-    $("#name").val("");
-    $("#year").val("");
-    $("#toan").val("");
-    $("#ly").val("");
-    $("#hoa").val("");
   }
