@@ -29,7 +29,48 @@
               </nav>
             </div>
           </div>
+        </div>
       </header>
     </div>
+
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tên phòng ban</th>
+            <th scope="col">Số nhân viên</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="departments"></tbody>
+      </table>
+    </div>
+    <script>
+      fetch("http://localhost:8082/departments")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (departments) {
+          var departmentsTable = document.getElementById("departments");
+          departments.forEach(function (e, i) {
+            departmentsTable.innerHTML +=
+              "<tr>" +
+              "<th scope='row'>" +
+              (i + 1) +
+              "</th>" +
+              "<td>" +
+              e.name +
+              "</td>" +
+              "<td>" +
+              e.numberOfStaff +
+              "</td>" +
+              "<td><a href='staffs.html?department_id=" +
+              e.id +
+              "' class='btn btn-primary'>Xem danh sách nhân viên</a></td>" +
+              "</tr>";
+          });
+        });
+    </script>
   </body>
 </html>

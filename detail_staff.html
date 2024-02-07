@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"/>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Chi tiết nhân viên</title>
+  </head>
+  <style>
+    img {
+      max-width: 200px;
+    }
+  </style>
+  <body>
+    <div id="sticky-wrapper">
+      <header class="site-navbar js-sticky-header site-navbar-target">
+        <div class="container">
+          <div class="row align-items-center position-relative">
+            <div class="site-logo">
+              <a href="index.html">
+                <span class="text-primary">Quản lý nhân viên</span>
+              </a>
+            </div>
+            <div class="col-12">
+              <nav class="site-navigation text-right ml-auto">
+                <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                  <li><a href="staffs.html">Danh sách nhân viên</a></li>
+                  <li><a href="departments.html">Phòng ban</a></li>
+                  <li><a href="staffSalary.html">Bảng lương</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div class="container">
+      <div class="my-5">
+        <a class="btn btn-primary" id="edit">Sửa</a>
+        <button class="btn btn-danger" id="del">Xoá</button>
+      </div>
+      <div id="main" class="d-flex flex-wrap">
+        <div class="row">
+          <div class="col"><img id="img" /></div>
+          <div class="col">
+            <div id="name" class="h5 row"></div>
+            <div id="doB" class="row"></div>
+            <div id="startDate" class="row"></div>
+            <div id="department" class="row"></div>
+            <div id="annualLeave" class="row"></div>
+            <div id="overTime" class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var options = { year: "numeric", month: "numeric", day: "numeric" };
+      let url = new URL(window.location.href);
+      let staff_id = url.searchParams.get("id");
+      if (staff_id) {
+        fetch("http://localhost:8082/staffs")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (staffs) {
+            fetch("http://localhost:8082/departments")
+              .then(function (rs) {
+                return rs.json();
+              })
+              .then(function (departments) {
+                render_staffs(staffs, departments);
+              });
+          });
+      }
+      function render_staffs(staffs, departments) {
+        var staff = staffs.find(function(x) {
+          return x.id == staff_id;
+        });
+        var department = "";
+        if (staff.departmentId) {
+          department = departments.find(function (x) {
+            return x.id === staff.departmentId;
+          }).name;
+        }
+
+        var doB = new Date(staff.doB);
+        var startDate = new Date(staff.startDate);
+        set_info(
+          staff.id,
+          staff.image,
+          staff.name,
+          doB.toLocaleDateString("en-GB", options),
+          startDate.toLocaleDateString("en-GB", options),
+          department,
+          staff.annualLeave,
+          staff.overTime
+        );
+
+        document.getElementById("del").addEventListener("click", function () {
+          if (staff.id != null) {
+            fetch("http://localhost:8082/staffs/" + staff.id, {
+              method: "DELETE",
+            }).then(function (r) {
+              window.location.href = "staffs.html";
+            });
+          }
+        });
+      }
+
+      function set_info(id, img, name, doB, startDate, department, annualLeave, overTime) {
+        document.getElementById("img").setAttribute("src", img);
+        document.getElementById("name").innerText = `Họ và tên: ${name}`;
+        document.getElementById("doB").innerText = `Ngày sinh: ${doB}`;
+        document.getElementById(
+          "startDate"
+        ).innerText = `Ngày vào công ty: ${startDate}`;
+        document.getElementById(
+          "department"
+        ).innerText = `Phòng ban: ${department}`;
+        document.getElementById(
+          "annualLeave"
+        ).innerText = `Số ngày nghỉ còn lại: ${annualLeave}`;
+        document.getElementById(
+          "overTime"
+        ).innerText = `Số ngày làm việc thêm: ${overTime}`;
+        document
+          .getElementById("edit")
+          .setAttribute("href", "update_insert_staff.html?staff_id=" + id);
+      }
+    </script>
+  </body>
+</html>
